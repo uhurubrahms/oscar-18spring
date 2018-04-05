@@ -1,0 +1,2 @@
+- setup-file:
+    local-name: /home/wooj/catkin_ws/src/race/build/devel/setup.sh
