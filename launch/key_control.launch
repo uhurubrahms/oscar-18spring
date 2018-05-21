@@ -1,0 +1,8 @@
+<launch>
+  <node pkg="race" name="serial_talker" type="talker.py" output="screen" launch-prefix="xterm -e"/>
+  <node pkg="rosserial_python" type="serial_node.py" name="serial_node">
+    <param name="port" value="/dev/teensy"/>
+    <param name="baud" value="57600"/>
+  </node>
+  <node pkg="race" name="keyboard_talker" type="keyboard.py" output="screen" required="true"/>
+</launch>
