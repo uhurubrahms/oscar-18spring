@@ -7,7 +7,7 @@ import sys
 import signal
 
 def signal_handler(signal, frame):
-   sys.exit('KeyboardInterrupt: Terminating.. ')
+    sys.exit('KeyboardInterrupt: Terminating.. ')
 
 
 forward = 0;
@@ -31,7 +31,7 @@ print('** keyboard.py **')
 try:
     while key != ord('q'):
         key = stdscr.getch()
-	stdscr.refresh()
+        stdscr.refresh()
         
         if key == curses.KEY_UP: 
             forward = forward + 1;
@@ -62,6 +62,7 @@ try:
         msg.angle = left
         pub.publish(msg)
 except KeyboardInterrupt:
+    print("keyboard interrupted!")
     #curses.nocbreak()
     #stdscr.keypad(False)
     #curses.echo()
