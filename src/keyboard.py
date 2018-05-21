@@ -3,13 +3,11 @@
 import rospy
 from race.msg import drive_param
 import curses
-import os
 import sys
 import signal
 
 def signal_handler(signal, frame):
-    #os.system('rosnode kill /serial_talker')
-    sys.exit('KeyboardInterrupt: Terminating.. ')
+   sys.exit('KeyboardInterrupt: Terminating.. ')
 
 
 forward = 0;
@@ -64,7 +62,6 @@ try:
         msg.angle = left
         pub.publish(msg)
 except KeyboardInterrupt:
-    print("??")
     #curses.nocbreak()
     #stdscr.keypad(False)
     #curses.echo()

@@ -1,0 +1,8 @@
+prefix=/home/wooj/catkin_ws/src/race/build/devel
+
+Name: race
+Description: Description of race
+Version: 0.0.0
+Cflags: -I/home/wooj/catkin_ws/src/race/build/devel/include
+Libs: -L/home/wooj/catkin_ws/src/race/build/devel/lib 
+Requires: roscpp rospy sensor_msgs std_msgs geometry_msgs

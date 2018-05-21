@@ -3,7 +3,14 @@
 import rospy
 from std_msgs.msg import Bool
 import curses
+import sys
+import signal
 
+def signal_handler(signal, frame):
+    if em_pub:
+        print('Emergency eStop => True')
+        em_pub.publish(True)
+    sys.exit('Emergency STOP!! Killed immediately!!')
 stdscr = curses.initscr()
 curses.cbreak()
 stdscr.keypad(1)
@@ -12,7 +19,10 @@ em_pub = rospy.Publisher('eStop', Bool, queue_size=10)
 
 stdscr.refresh()
 
+print('** kill.py **')
 key = ''
+signal.signal(signal.SIGINT, signal_handler)
+
 while key != ord('q'):
 	key = stdscr.getch()
 	stdscr.refresh()
@@ -23,4 +33,6 @@ while key != ord('q'):
 		em_pub.publish(False)
 		stdscr.addstr(5, 20, "Normal Operation :)")
 
+
 curses.endwin()
+
