@@ -75,6 +75,7 @@ find_package(catkin REQUIRED COMPONENTS
    sensor_msgs#   std_msgs
  )
 
+
 ################################################
 ## Declare ROS dynamic reconfigure parameters ##
 ################################################
@@ -104,10 +105,14 @@ find_package(catkin REQUIRED COMPONENTS
 ## LIBRARIES: libraries you create in this project that dependent projects also need
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
+
+
+find_package(message_generation)
+
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES race
-  CATKIN_DEPENDS roscpp rospy sensor_msgs std_msgs geometry_msgs
+  CATKIN_DEPENDS roscpp rospy sensor_msgs std_msgs geometry_msgs message_runtime
 #  DEPENDS system_lib
 )
 
@@ -131,17 +136,18 @@ include_directories(
 ## as an example, code may need to be generated before libraries
 ## either from message generation or dynamic reconfigure
 # add_dependencies(race ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-
 ## Declare a C++ executable
 # add_executable(race_node src/race_node.cpp)
 # add_executable(odom_scan_matcher src/getOdomFromMatcher.cpp)
 # add_executable(hectorOdom src/hectorOdom.cpp)
 # add_executable(amclOdom src/amclOdom.cpp)
 # add_executable(processScan src/process_scan.cpp)
-
+add_executable(fuckingodom src/odom_controller.cpp)
 ## Add cmake target dependencies of the executable
 ## same as for the library above
 # add_dependencies(race_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+
+add_dependencies(fuckingodom race_generate_messages_cpp)
 
 
 
@@ -158,7 +164,10 @@ include_directories(
 #target_link_libraries(processScan
 #   ${catkin_LIBRARIES}
 # )
-
+target_link_libraries(fuckingodom
+  ${catkin_LIBRARIES}
+)
+#
 #############
 ## Install ##
 #############
@@ -174,7 +183,7 @@ include_directories(
 # )
 
 ## Mark executables and/or libraries for installation
-# install(TARGETS race race_node
+#install(TARGETS race race_node
 #   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
 #   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
 #   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
