@@ -43,6 +43,7 @@ double curr_steering_angle = 0.0;
 double yaw = 0.0;
 
 // from IMU
+double start_velocity = 0.0;
 double linear_velocity_from_imu_x = 0.0;
 double linear_velocity_from_imu_y = 0.0;
 double angular_velocity_from_imu_z = 0.0;
@@ -80,13 +81,12 @@ void IMUCallback(const sensor_msgs::Imu& imuMsg){
   double ux = (double) (curr_linear_acceleration_imu_x + prev_linear_acceleration_imu_x)/2 * dt;
   double uy = (double) (curr_linear_acceleration_imu_y + prev_linear_acceleration_imu_y)/2 * dt;
   
-  // dividing by 1000 needed? unit issue
-  // linear velocity i'm getting from rpm data is meter per sec..
    
   // s = v_0*t + 1/2 * a * t^2 (this is distance traveled.. isn't it?)
   // v_0 = ?
-  linear_velocity_from_imu_x += ux; // Is this right?
+  //linear_velocity_from_imu_x += ux; // Is this right?
   linear_velocity_from_imu_y += uy; // Is this right?
+  linear_velocity_from_imu_x = start_velocity * dt + 1/2 * curr_linear_acceleration_imu_x * dt * dt;
 
   // What exactly should go into pose.position.x/y??? Is it velocity or distance??
   angular_velocity_from_imu_z = imuMsg.angular_velocity.z; 
